@@ -30,6 +30,12 @@ var model = {
             var index = ship.locations.indexOf(guess);
 
             if (index >= 0) {
+                // Проверка, было ли уже попадание по этой координате
+                if (ship.hits[index] === "hit") {
+                    view.displayMessage("Oops, you already hit that location!");
+                    return true;
+                }
+
                 ship.hits[index] = "hit";
                 view.displayHit(guess);
                 view.displayMessage("HIT!");
@@ -123,7 +129,7 @@ function parseGuess(guess) {
 var controller = {
     guesses: 0,
 
-    processGuess: function(guess) {
+    processGuess: function (guess) {
         var location = parseGuess(guess)
         if (location) {
             this.guesses++;
